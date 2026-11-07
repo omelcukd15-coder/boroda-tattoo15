@@ -135,7 +135,8 @@ export default function Portfolio({ onOpenLightbox }) {
                     src={item.image}
                     alt={item.title}
                     className="portfolio-item-card__img"
-                    loading="lazy"
+                    loading={index < 4 ? 'eager' : 'lazy'}
+                    decoding="async"
                   />
                   <div className="portfolio-item-card__overlay">
                     <div className="zoom-icon-box">
@@ -182,7 +183,8 @@ export default function Portfolio({ onOpenLightbox }) {
                     src={item.image}
                     alt={item.title}
                     className="portfolio-item-card__img"
-                    loading="lazy"
+                    loading={index < 4 ? 'eager' : 'lazy'}
+                    decoding="async"
                   />
                   <div className="portfolio-item-card__overlay">
                     <div className="zoom-icon-box">

@@ -12,7 +12,7 @@ export default function Services() {
       price: 'от 1 200 ₽',
       oldPrice: '1 500 ₽',
       desc: 'Лаконичные символы, тонкие линии, аккуратная микро-геометрия. Бесплатная заживляющая плёнка в подарок.',
-      image: '/assets/tattoo/real/work_1.jpg',
+      image: '/assets/tattoo/real/work_1.webp',
       time: '~ 1 час',
       popular: true,
       tag: '-20% ВЫГОДА',
@@ -23,7 +23,7 @@ export default function Services() {
       price: 'от 2 000 ₽',
       oldPrice: '2 500 ₽',
       desc: 'Памятные даты, фразы со смыслом и каллиграфия. Индивидуальный подбор шрифта. Обезболивание бесплатно.',
-      image: '/assets/tattoo/real/work_2.jpg',
+      image: '/assets/tattoo/real/work_2.webp',
       time: '~ 1.5 часа',
       popular: false,
       tag: 'Каллиграфия',
@@ -34,7 +34,7 @@ export default function Services() {
       price: 'от 3 000 ₽',
       oldPrice: '3 800 ₽',
       desc: 'Ч/б реализм, хищники, мифология, Dark Art. Ювелирная детализация, плотный цвет. Плёнка в подарок.',
-      image: '/assets/tattoo/real/work_7.jpg',
+      image: '/assets/tattoo/real/work_7.webp',
       time: 'от 2.5 часов',
       popular: true,
       tag: 'Хит сезона',
@@ -49,7 +49,7 @@ export default function Services() {
       price: 'от 5 000 ₽',
       oldPrice: '6 500 ₽',
       desc: 'Индивидуальная разработка концепта, перекрытие старых работ (cover-up), маскировка шрамов.',
-      image: '/assets/tattoo/real/work_11_review.jpg',
+      image: '/assets/tattoo/real/work_11_review.webp',
       time: 'сеансы 3–5 часов',
       popular: false,
       tag: 'Dark Art / Реализм',
@@ -60,7 +60,7 @@ export default function Services() {
       price: 'от 15 000 ₽',
       oldPrice: '19 000 ₽',
       desc: 'Масштабная японская композиция или реализм на всю руку (самураи, Они, драконы). Плёнка на каждый сеанс.',
-      image: '/assets/tattoo/real/work_3.jpg',
+      image: '/assets/tattoo/real/work_3.webp',
       time: 'от 2 сеансов',
       popular: true,
       tag: 'Масштаб',
@@ -71,7 +71,7 @@ export default function Services() {
       price: '0 ₽ (Бесплатно)',
       oldPrice: '',
       desc: 'Каждому клиенту гарантия салона: бесплатная коррекция после заживления при необходимости.',
-      image: '/assets/tattoo/real/work_8.jpg',
+      image: '/assets/tattoo/real/work_8.webp',
       time: '~ 30–60 мин',
       popular: false,
       tag: 'Гарантия студии',
@@ -121,14 +121,15 @@ export default function Services() {
 
         {/* Grid of clean styled cards */}
         <div className="services-grid">
-          {displayedServices.map((service) => (
+          {displayedServices.map((service, index) => (
             <article key={service.id} className="service-card">
               <div className="service-card__image-box">
                 <img
                   src={service.image}
                   alt={service.title}
                   className="service-card__img"
-                  loading="lazy"
+                  loading={index < 3 ? 'eager' : 'lazy'}
+                  decoding="async"
                 />
                 {service.popular && (
                   <span className="service-card__popular-badge">

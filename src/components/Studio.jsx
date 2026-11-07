@@ -85,6 +85,7 @@ export default function Studio({ onOpenBooking }) {
               alt="Интерьер тату-студии Чёрная Борода во Владикавказе"
               className="studio-img"
               loading="lazy"
+              decoding="async"
             />
             <div className="studio-img-badge font-heading">
               <Flame size={14} className="text-red" />

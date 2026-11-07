@@ -97,6 +97,8 @@ export default function Hero({ onOpenBooking }) {
               alt="Тату-мастер Арсен за работой в салоне Чёрная Борода"
               className="hero-artist-img"
               loading="eager"
+              fetchPriority="high"
+              decoding="async"
             />
             <div className="hero-image-overlay"></div>
 

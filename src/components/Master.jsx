@@ -86,6 +86,7 @@ export default function Master({ onOpenBooking }) {
                 alt="Арсен — основатель и тату-мастер салона Чёрная Борода"
                 className="master-photo-img"
                 loading="lazy"
+                decoding="async"
               />
               <div className="master-photo-vignette"></div>
               
