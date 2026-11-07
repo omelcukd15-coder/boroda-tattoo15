@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Calendar, ArrowRight, MessageSquare, MapPin } from 'lucide-react';
-
-const InstagramIcon = ({ size = 20, className = "" }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-  </svg>
-);
+import { Menu, X, Phone, ArrowRight, MessageSquare, MapPin, Sparkles, Gift } from 'lucide-react';
+import { STUDIO_INFO, WHATSAPP_INTENTS } from '../constants';
 
 export default function Navbar({ onOpenBooking }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -46,11 +39,12 @@ export default function Navbar({ onOpenBooking }) {
 
   const navLinks = [
     { name: 'Главная', href: '#hero' },
-    { name: 'Услуги', href: '#services' },
+    { name: 'Услуги и Цены', href: '#services' },
     { name: 'Портфолио', href: '#portfolio' },
+    { name: 'Тату-модели', href: '#models', badge: '0 ₽' },
+    { name: 'Розыгрыши', href: '#giveaways' },
     { name: 'Отзывы', href: '#reviews' },
-    { name: 'Мастер Арсен', href: '#master' },
-    { name: 'Студия', href: '#studio' },
+    { name: 'Мастер', href: '#master' },
     { name: 'Контакты', href: '#contacts' },
   ];
 
@@ -77,16 +71,17 @@ export default function Navbar({ onOpenBooking }) {
           <a href="#hero" className="brand-logo" onClick={(e) => handleLinkClick(e, '#hero')}>
             <div className="logo-icon-wrapper">
               <img 
-                src="/assets/tattoo/main-logo.png" 
-                alt="Чёрная Борода" 
+                src="/assets/tattoo/real/logo_altay.jpg" 
+                alt="Чёрная Борода Тату Салон" 
                 className="logo-img" 
                 width="42" 
                 height="42" 
+                style={{ borderRadius: '50%', objectFit: 'cover' }}
               />
             </div>
             <div className="logo-text">
               <span className="logo-title font-heading">ЧЁРНАЯ БОРОДА</span>
-              <span className="logo-subtitle">ТАТУ - САЛОН</span>
+              <span className="logo-subtitle">ТАТУ - САЛОН • ВЛАДИКАВКАЗ</span>
             </div>
           </a>
 
@@ -96,27 +91,43 @@ export default function Navbar({ onOpenBooking }) {
               <a
                 key={link.name}
                 href={link.href}
-                className="nav-link"
+                className={`nav-link ${link.badge ? 'nav-link--badge' : ''}`}
                 onClick={(e) => handleLinkClick(e, link.href)}
               >
-                {link.name}
+                <span>{link.name}</span>
+                {link.badge && <span className="nav-link-pill font-heading">{link.badge}</span>}
               </a>
             ))}
           </nav>
 
-          {/* Header Right Actions */}
+          {/* Action CTAs */}
           <div className="header-actions">
-            <a href="tel:+79888374501" className="phone-btn" title="Позвонить в салон">
-              <Phone size={15} />
-              <span className="phone-text">+7 988 837-45-01</span>
+            <a 
+              href={`tel:${STUDIO_INFO.phoneRaw}`} 
+              className="header-phone font-heading" 
+              title="Позвонить в салон"
+            >
+              <Phone size={15} className="text-gold" />
+              <span>{STUDIO_INFO.phone}</span>
             </a>
 
-            {/* Mobile burger button */}
+            <a
+              href={WHATSAPP_INTENTS.general}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary header-booking-btn font-heading"
+              aria-label="Записаться через WhatsApp"
+            >
+              <MessageSquare size={16} />
+              <span>ЗАПИСАТЬСЯ</span>
+            </a>
+
+            {/* Mobile Hamburger Button */}
             <button
-              className={`mobile-toggle ${mobileMenuOpen ? 'mobile-toggle--active' : ''}`}
+              className="mobile-menu-toggle"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
               aria-expanded={mobileMenuOpen}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -124,102 +135,70 @@ export default function Navbar({ onOpenBooking }) {
         </div>
       </header>
 
-      {/* Mobile Drawer Overlay */}
-      <div 
-        className={`mobile-backdrop ${mobileMenuOpen ? 'mobile-backdrop--active' : ''}`}
-        onClick={() => setMobileMenuOpen(false)}
-        aria-hidden="true"
-      />
+      {/* Mobile Drawer Navigation */}
+      {mobileMenuOpen && (
+        <div className="mobile-nav-backdrop" onClick={() => setMobileMenuOpen(false)}>
+          <div className="mobile-nav-drawer" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-nav-header">
+              <div className="brand-logo">
+                <img 
+                  src="/assets/tattoo/real/logo_altay.jpg" 
+                  alt="Чёрная Борода" 
+                  className="logo-img" 
+                  width="36" 
+                  height="36" 
+                  style={{ borderRadius: '50%', objectFit: 'cover' }}
+                />
+                <div className="logo-text">
+                  <span className="logo-title font-heading">ЧЁРНАЯ БОРОДА</span>
+                  <span className="logo-subtitle">ВЛАДИКАВКАЗ</span>
+                </div>
+              </div>
+              <button 
+                className="modal-close-btn" 
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Закрыть меню"
+              >
+                <X size={20} />
+              </button>
+            </div>
 
-      {/* Fullscreen Mobile Drawer */}
-      <div 
-        className={`mobile-drawer ${mobileMenuOpen ? 'mobile-drawer--open' : ''}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Мобильное меню"
-      >
-        <div className="mobile-drawer__top">
-          <span className="mobile-drawer__tag font-heading">НАВИГАЦИЯ</span>
-          <button 
-            className="mobile-drawer__close" 
-            onClick={() => setMobileMenuOpen(false)}
-            aria-label="Закрыть меню"
-          >
-            <X size={22} />
-          </button>
-        </div>
+            <nav className="mobile-nav-links">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="mobile-nav-link font-heading"
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                >
+                  <span>{link.name}</span>
+                  {link.badge && <span className="nav-link-pill font-heading">{link.badge}</span>}
+                </a>
+              ))}
+            </nav>
 
-        <nav className="mobile-drawer__nav">
-          {navLinks.map((link, idx) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="mobile-drawer__link font-heading"
-              style={{ transitionDelay: `${idx * 0.04}s` }}
-              onClick={(e) => handleLinkClick(e, link.href)}
-            >
-              <span className="nav-number">0{idx + 1}</span>
-              <span className="nav-text">{link.name}</span>
-            </a>
-          ))}
-        </nav>
+            <div className="mobile-nav-footer">
+              <div className="mobile-schedule-card">
+                <MapPin size={16} className="text-red" />
+                <div>
+                  <strong>{STUDIO_INFO.address}</strong>
+                  <p>{STUDIO_INFO.schedule}</p>
+                </div>
+              </div>
 
-        <div className="mobile-drawer__footer">
-          <div className="mobile-drawer__contacts">
-            <a href="tel:+79888374501" className="mobile-drawer__phone">
-              <Phone size={18} className="text-red" />
-              <span>+7 988 837-45-01</span>
-            </a>
-            <div className="mobile-drawer__address">
-              <MapPin size={16} className="text-red" />
-              <span>г. Владикавказ, пр. Мира, 53</span>
+              <a
+                href={WHATSAPP_INTENTS.general}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary mobile-nav-btn font-heading"
+              >
+                <MessageSquare size={18} />
+                <span>НАПИСАТЬ В WHATSAPP</span>
+              </a>
             </div>
           </div>
-
-          <div className="mobile-drawer__socials">
-            <a 
-              href="https://wa.me/79888374501" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="drawer-social-btn"
-            >
-              <MessageSquare size={16} />
-              <span>WhatsApp</span>
-            </a>
-            <a 
-              href="https://instagram.com/taty_vld_arsen" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="drawer-social-btn"
-            >
-              <InstagramIcon size={16} />
-              <span>Instagram</span>
-            </a>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '16px' }}>
-            <a
-              href="https://wa.me/79888374501?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C+%D1%85%D0%BE%D1%87%D1%83+%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F+%D0%BD%D0%B0+%D1%81%D0%B5%D0%B0%D0%BD%D1%81+%D0%BA+%D0%90%D1%80%D1%81%D0%B5%D0%BD%D1%83"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-              style={{ width: '100%', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
-            >
-              <MessageSquare size={16} />
-              <span>Записаться в WhatsApp</span>
-            </a>
-
-            <a
-              href="tel:+79888374501"
-              className="btn-secondary"
-              style={{ width: '100%', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
-            >
-              <Phone size={15} />
-              <span>Позвонить Арсену</span>
-            </a>
-          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

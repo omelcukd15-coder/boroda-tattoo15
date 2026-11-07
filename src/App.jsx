@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Features from './components/Features';
+import BenefitsBar from './components/BenefitsBar';
 import Services from './components/Services';
 import Portfolio from './components/Portfolio';
+import ModelProgram from './components/ModelProgram';
+import GiveawaysSection from './components/GiveawaysSection';
 import Reviews from './components/Reviews';
 import Master from './components/Master';
 import Studio from './components/Studio';
@@ -11,6 +13,7 @@ import Contacts from './components/Contacts';
 import Footer from './components/Footer';
 import LightboxModal from './components/LightboxModal';
 import { MessageSquare, Phone } from 'lucide-react';
+import { STUDIO_INFO, WHATSAPP_INTENTS } from './constants';
 import './App.css';
 
 export default function App() {
@@ -21,9 +24,8 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show floating CTA only when user scrolls past Hero section (> 380px)
-      const scrolledPastHero = window.scrollY > 380;
-      setShowFloatingCta(scrolledPastHero);
+      // Show floating mobile CTA when user scrolls past Hero
+      setShowFloatingCta(window.scrollY > 380);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -31,8 +33,21 @@ export default function App() {
   }, []);
 
   const handleOpenWhatsApp = (serviceName = 'Консультация') => {
-    const text = `Здравствуйте, хочу записаться на тату к Арсену (${serviceName}), я с веб-сайта.`;
-    window.open(`https://wa.me/79888374501?text=${encodeURIComponent(text)}`, '_blank');
+    const text = `Здравствуйте! Хочу записаться на тату к Арсену в салон «Чёрная Борода» (${serviceName}), я с официального сайта.`;
+    window.open(`https://wa.me/${STUDIO_INFO.phoneRaw.replace('+', '')}?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
+  const handleScrollTo = (elementId) => {
+    const el = document.getElementById(elementId);
+    if (el) {
+      const headerOffset = 70;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
   };
 
   const handleOpenLightbox = (item, items = [], index = 0) => {
@@ -59,32 +74,53 @@ export default function App() {
     setLightboxItem(lightboxItems[nextIdx]);
   };
 
-  const whatsappUrl = `https://wa.me/79888374501?text=${encodeURIComponent("Здравствуйте, хочу записаться на тату к Арсену, я с веб-сайта")}`;
-
   return (
     <div className="site-wrapper">
-      {/* Navigation */}
+      {/* Header */}
       <Navbar onOpenBooking={() => handleOpenWhatsApp('Главное меню')} />
 
-      {/* Main Content Sections */}
-      <main>
+      {/* Main Content */}
+      <main id="main-content">
         <Hero onOpenBooking={handleOpenWhatsApp} />
-        <Features />
+        
+        {/* Core Value Propositions Bar */}
+        <BenefitsBar 
+          onOpenModel={() => handleScrollTo('models')}
+          onOpenGiveaways={() => handleScrollTo('giveaways')}
+        />
+
+        {/* Services & Prices */}
         <Services onSelectService={(service) => handleOpenWhatsApp(service)} />
+
+        {/* Real Yandex Maps Portfolio */}
         <Portfolio 
           onOpenLightbox={handleOpenLightbox} 
           onOpenBooking={() => handleOpenWhatsApp('Портфолио')} 
         />
+
+        {/* Tattoo Model Program: Earn or get 100% free tattoo */}
+        <ModelProgram />
+
+        {/* Giveaways & Promotions */}
+        <GiveawaysSection />
+
+        {/* Reviews from Yandex */}
         <Reviews />
+
+        {/* Master Arsen */}
         <Master onOpenBooking={handleOpenWhatsApp} />
+
+        {/* Studio & Sterility */}
         <Studio onOpenBooking={handleOpenWhatsApp} />
+
+        {/* Location & Contacts */}
         <Contacts onOpenBooking={handleOpenWhatsApp} />
       </main>
 
       {/* Footer */}
       <Footer />
 
-      {/* Lightbox for zooming works */}
+      {/* Lightbox Modal */}
       <LightboxModal
         item={lightboxItem}
         items={lightboxItems}
@@ -94,20 +130,20 @@ export default function App() {
         onClose={handleCloseLightbox}
       />
 
-      {/* Sleek Floating Mobile Dock: Direct WhatsApp & Call */}
+      {/* Mobile Floating Action Dock */}
       {showFloatingCta && !lightboxItem && (
         <aside className="mobile-floating-dock" aria-label="Быстрые действия">
           <a 
-            href="tel:+79888374501" 
+            href={`tel:${STUDIO_INFO.phoneRaw}`} 
             className="floating-dock-phone-btn font-heading"
-            title="Позвонить Арсену"
-            aria-label="Позвонить Арсену"
+            title="Позвонить в салон"
+            aria-label="Позвонить в салон"
           >
             <Phone size={16} />
             <span>ПОЗВОНИТЬ</span>
           </a>
           <a 
-            href={whatsappUrl} 
+            href={WHATSAPP_INTENTS.general} 
             target="_blank" 
             rel="noopener noreferrer" 
             className="floating-dock-book-btn font-heading"
@@ -115,7 +151,7 @@ export default function App() {
             aria-label="Записаться через WhatsApp"
           >
             <MessageSquare size={16} />
-            <span>WHATSAPP</span>
+            <span>WHATSAPP (-20%)</span>
           </a>
         </aside>
       )}

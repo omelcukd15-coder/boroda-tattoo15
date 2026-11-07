@@ -8,152 +8,21 @@ import {
   SlidersHorizontal,
   Flame,
   Star,
-  MessageSquare
+  MessageSquare,
+  ShieldCheck,
+  Sparkles
 } from 'lucide-react';
+import { PORTFOLIO_ITEMS, PORTFOLIO_CATEGORIES } from '../data/portfolioData';
+import { EXTERNAL_LINKS, createWhatsAppUrl } from '../constants';
 
 export default function Portfolio({ onOpenLightbox }) {
   const [filter, setFilter] = useState('all');
   const [viewMode, setViewMode] = useState('carousel'); // 'carousel' | 'grid'
   const scrollContainerRef = useRef(null);
 
-  const yandexMapsUrl = 'https://yandex.ru/maps/-/CXfkURkr';
-
-  // Verified studio works
-  const portfolioItems = [
-    {
-      id: 1,
-      title: 'Сибирский тигр',
-      category: 'realism',
-      categoryLabel: 'Реализм',
-      image: '/assets/tattoo/portfolio-tiger.webp',
-      style: 'Ч/Б Реализм',
-      placement: 'Предплечье',
-      time: '~ 4 часа',
-    },
-    {
-      id: 2,
-      title: 'Готический череп и розы',
-      category: 'dark',
-      categoryLabel: 'Dark Art',
-      image: '/assets/tattoo/portfolio-dark-skull.webp',
-      style: 'Dark Art / Графика',
-      placement: 'Плечо',
-      time: '~ 4.5 часа',
-    },
-    {
-      id: 3,
-      title: 'Зевс и громовержцы',
-      category: 'myth',
-      categoryLabel: 'Мифология',
-      image: '/assets/tattoo/portfolio-zeus.webp',
-      style: 'Ч/Б Реализм',
-      placement: 'Предплечье',
-      time: '~ 5 часов',
-    },
-    {
-      id: 4,
-      title: 'Череп в терновом венце',
-      category: 'dark',
-      categoryLabel: 'Dark Art',
-      image: '/assets/tattoo/portfolio-skull.webp',
-      style: 'Графика / Теневая прорисовка',
-      placement: 'Рукав',
-      time: '~ 3.5 часа',
-    },
-    {
-      id: 5,
-      title: 'Лес, полнолуние и странник',
-      category: 'graphics',
-      categoryLabel: 'Графика',
-      image: '/assets/tattoo/portfolio-forest.webp',
-      style: 'Гравюра / Ч/Б Графика',
-      placement: 'Предплечье',
-      time: '~ 3 часа',
-    },
-    {
-      id: 6,
-      title: 'Око времени и клинок',
-      category: 'dark',
-      categoryLabel: 'Символизм',
-      image: '/assets/tattoo/portfolio-eye.webp',
-      style: 'Реализм / Детализация',
-      placement: 'Рукав',
-      time: '~ 4 часа',
-    },
-    {
-      id: 7,
-      title: 'Коронованный лев',
-      category: 'realism',
-      categoryLabel: 'Реализм',
-      image: '/assets/tattoo/portfolio-lion.webp',
-      style: 'Детализированный реализм',
-      placement: 'Плечо',
-      time: '~ 4.5 часа',
-    },
-    {
-      id: 8,
-      title: 'Полный рукав воина',
-      category: 'sleeves',
-      categoryLabel: 'Рукава',
-      image: '/assets/tattoo/portfolio-sleeve.webp',
-      style: 'Масштабная авторская композиция',
-      placement: 'Полная рука',
-      time: '3 сеанса',
-    },
-    {
-      id: 9,
-      title: 'Оскал северного волка',
-      category: 'graphics',
-      categoryLabel: 'Животные',
-      image: '/assets/tattoo/portfolio-wolf.webp',
-      style: 'Графика',
-      placement: 'Предплечье',
-      time: '~ 3 часа',
-    },
-    {
-      id: 10,
-      title: 'Скорбящая монахиня',
-      category: 'dark',
-      categoryLabel: 'Dark Art',
-      image: '/assets/tattoo/portfolio-nun.webp',
-      style: 'Ч/Б Реализм',
-      placement: 'Предплечье',
-      time: '~ 4 часа',
-    },
-    {
-      id: 11,
-      title: 'Готический собор',
-      category: 'graphics',
-      categoryLabel: 'Архитектура',
-      image: '/assets/tattoo/portfolio-cathedral.webp',
-      style: 'Архитектурная гравюра',
-      placement: 'Икра',
-      time: '~ 3.5 часа',
-    },
-    {
-      id: 12,
-      title: 'Маска они и демон',
-      category: 'myth',
-      categoryLabel: 'Мифология',
-      image: '/assets/tattoo/portfolio-demon.webp',
-      style: 'Японская мифология',
-      placement: 'Предплечье',
-      time: '~ 3.5 часа',
-    },
-  ];
-
-  const categories = [
-    { id: 'all', label: 'Все работы' },
-    { id: 'realism', label: 'Реализм' },
-    { id: 'dark', label: 'Dark Art' },
-    { id: 'graphics', label: 'Графика' },
-    { id: 'sleeves', label: 'Рукава' },
-    { id: 'myth', label: 'Мифология' },
-  ];
-
   const filtered = filter === 'all' 
-    ? portfolioItems 
-    : portfolioItems.filter(item => item.category === filter);
+    ? PORTFOLIO_ITEMS 
+    : PORTFOLIO_ITEMS.filter(item => item.category === filter);
 
   const scrollGallery = (direction) => {
     if (scrollContainerRef.current) {
@@ -164,9 +33,7 @@ export default function Portfolio({ onOpenLightbox }) {
   };
 
   const getWhatsAppWorkUrl = (title) => {
-    return `https://wa.me/79888374501?text=${encodeURIComponent(
-      `Здравствуйте, Арсен! Понравилась работа «${title}» из портфолио, хочу сделать в похожем стиле.`
-    )}`;
+    return createWhatsAppUrl(`Здравствуйте, Арсен! Понравилась ваша реальная работа «${title}» из портфолио с сайта, хочу сделать в таком же стиле.`);
   };
 
   return (
@@ -175,79 +42,63 @@ export default function Portfolio({ onOpenLightbox }) {
         {/* Header */}
         <div className="portfolio-header">
           <div>
+            <div className="section-pill-row">
+              <span className="section-pill">РЕАЛЬНЫЕ РАБОТЫ ИЗ ЯНДЕКС КАРТ</span>
+              <span className="section-pill section-pill--gold">★ 5.0 РЕЙТИНГ</span>
+            </div>
             <h2 className="section-title">
-              <span className="font-heading">НАШИ РАБОТЫ</span>
+              <span className="font-heading">ПОРТФОЛИО СТУДИИ</span>
             </h2>
             <p className="section-desc">
-              Реальные работы мастера Арсена без ретуши и фильтров. Нажмите на работу для просмотра деталей.
+              Все фотографии ниже — подлинные работы мастера Арсена из карточки салона на Яндекс Картах. Без ретуши и нейросетей.
             </p>
           </div>
 
           <div className="portfolio-header-actions">
             <a
-              href={yandexMapsUrl}
+              href={EXTERNAL_LINKS.yandexMaps}
               target="_blank"
               rel="noopener noreferrer"
               className="portfolio-yandex-btn font-heading"
               title="Открыть профиль на Яндекс Картах"
             >
               <span className="yandex-dot" aria-hidden="true"></span>
-              <span className="yandex-btn-text">РАБОТЫ НА ЯНДЕКС КАРТАХ</span>
+              <span className="yandex-btn-text">ЯНДЕКС КАРТЫ (ВСЕ ФОТО)</span>
               <ExternalLink size={15} />
             </a>
 
             <div className="view-mode-toggle" aria-label="Режим отображения">
               <button
-                type="button"
-                className={`view-toggle-btn ${viewMode === 'carousel' ? 'view-toggle-btn--active' : ''}`}
+                className={`view-mode-btn ${viewMode === 'carousel' ? 'active' : ''}`}
                 onClick={() => setViewMode('carousel')}
                 title="Режим карусели"
                 aria-label="Режим карусели"
               >
-                <SlidersHorizontal size={17} />
+                <SlidersHorizontal size={16} />
+                <span className="view-mode-label">Слайдер</span>
               </button>
               <button
-                type="button"
-                className={`view-toggle-btn ${viewMode === 'grid' ? 'view-toggle-btn--active' : ''}`}
+                className={`view-mode-btn ${viewMode === 'grid' ? 'active' : ''}`}
                 onClick={() => setViewMode('grid')}
                 title="Режим сетки"
                 aria-label="Режим сетки"
               >
-                <LayoutGrid size={17} />
+                <LayoutGrid size={16} />
+                <span className="view-mode-label">Сетка</span>
               </button>
             </div>
-
-            {viewMode === 'carousel' && (
-              <div className="portfolio-controls">
-                <button 
-                  type="button"
-                  className="carousel-btn" 
-                  onClick={() => scrollGallery('left')}
-                  aria-label="Предыдущие работы"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button 
-                  type="button"
-                  className="carousel-btn" 
-                  onClick={() => scrollGallery('right')}
-                  aria-label="Следующие работы"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
-            )}
           </div>
         </div>
 
-        {/* Categories Tabs */}
+        {/* Categories / Filter Tabs */}
         <div className="portfolio-filters-wrapper">
-          <div className="portfolio-filters">
-            {categories.map((cat) => (
+          <div className="portfolio-filters" role="tablist" aria-label="Фильтр стилей">
+            {PORTFOLIO_CATEGORIES.map(cat => (
               <button
                 key={cat.id}
-                type="button"
-                className={`filter-pill ${filter === cat.id ? 'filter-pill--active' : ''}`}
+                role="tab"
+                aria-selected={filter === cat.id}
+                className={`portfolio-filter-tab font-heading ${filter === cat.id ? 'active' : ''}`}
                 onClick={() => setFilter(cat.id)}
               >
                 {cat.label}
@@ -256,95 +107,178 @@ export default function Portfolio({ onOpenLightbox }) {
           </div>
         </div>
 
-        {/* Gallery View */}
+        {/* Studio Perks Banner */}
+        <div className="portfolio-perks-banner">
+          <div className="perk-tag">
+            <Sparkles size={14} className="text-gold" />
+            <span>Цены на 20% ниже конкурентов</span>
+          </div>
+          <div className="perk-tag">
+            <ShieldCheck size={14} className="text-green" />
+            <span>Бесплатная заживляющая плёнка</span>
+          </div>
+          <div className="perk-tag">
+            <Star size={14} className="text-gold" />
+            <span>Обезболивающая мазь в подарок</span>
+          </div>
+        </div>
+
+        {/* Gallery Content */}
         {viewMode === 'carousel' ? (
-          <div className="portfolio-carousel" ref={scrollContainerRef}>
-            {filtered.map((item, index) => (
-              <div
-                key={item.id}
-                className="portfolio-item-card"
-                onClick={() => onOpenLightbox(item, filtered, index)}
-              >
-                <div className="portfolio-item-card__img-box">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="portfolio-item-card__img"
-                    loading="lazy"
-                  />
-                  <div className="portfolio-item-card__overlay">
-                    <div className="zoom-icon-box">
-                      <ZoomIn size={24} />
-                    </div>
-                    <span className="overlay-text font-heading">УВЕЛИЧИТЬ</span>
-                  </div>
-                </div>
+          <div className="portfolio-carousel-wrapper">
+            {/* Nav Arrows */}
+            <button 
+              className="carousel-nav-arrow carousel-nav-prev"
+              onClick={() => scrollGallery('left')}
+              aria-label="Предыдущие работы"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button 
+              className="carousel-nav-arrow carousel-nav-next"
+              onClick={() => scrollGallery('right')}
+              aria-label="Следующие работы"
+            >
+              <ChevronRight size={24} />
+            </button>
 
-                <div className="portfolio-item-card__meta">
-                  <span className="meta-tag">{item.categoryLabel}</span>
-                  <h3 className="meta-title font-heading">{item.title}</h3>
-                  <div className="meta-sub">
-                    <span>{item.placement}</span>
-                    <span>•</span>
-                    <span>{item.style}</span>
-                  </div>
-
-                  <a
-                    href={getWhatsAppWorkUrl(item.title)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="work-wa-btn"
-                    onClick={(e) => e.stopPropagation()}
-                    title="Записаться на похожую работу в WhatsApp"
+            {/* Scroll Container */}
+            <div 
+              ref={scrollContainerRef} 
+              className="portfolio-carousel-track scrollbar-hide"
+            >
+              {filtered.map((item, index) => (
+                <div 
+                  key={item.id} 
+                  className={`portfolio-item-card ${item.highlight ? 'portfolio-item-card--highlight' : ''}`}
+                >
+                  <div 
+                    className="portfolio-image-wrapper"
+                    onClick={() => onOpenLightbox(item, filtered, index)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Увеличить: ${item.title}`}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        onOpenLightbox(item, filtered, index);
+                      }
+                    }}
                   >
-                    <MessageSquare size={14} />
-                    <span>Хочу такую в WhatsApp</span>
-                  </a>
+                    <img 
+                      src={item.image} 
+                      alt={item.title} 
+                      className="portfolio-image"
+                      loading="lazy"
+                    />
+                    
+                    <div className="portfolio-image-overlay">
+                      <div className="zoom-indicator font-heading">
+                        <ZoomIn size={18} />
+                        <span>УВЕЛИЧИТЬ</span>
+                      </div>
+                    </div>
+
+                    <span className="portfolio-category-badge font-heading">
+                      {item.categoryLabel}
+                    </span>
+
+                    {item.highlight && (
+                      <span className="portfolio-highlight-badge font-heading" title="Особая авторская работа">
+                        <Flame size={12} />
+                        <span>ТОП РАБОТА</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="portfolio-card-body">
+                    <h3 className="portfolio-item-title font-heading">{item.title}</h3>
+                    <p className="portfolio-item-style">{item.style}</p>
+                    {item.desc && <p className="portfolio-item-desc">{item.desc}</p>}
+                    
+                    <div className="portfolio-item-meta">
+                      <span className="meta-tag">{item.placement}</span>
+                      <span className="meta-tag meta-tag-time">{item.time}</span>
+                    </div>
+
+                    <a 
+                      href={getWhatsAppWorkUrl(item.title)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="portfolio-item-cta font-heading"
+                    >
+                      <MessageSquare size={14} />
+                      <span>ХОЧУ В ЭТОМ СТИЛЕ</span>
+                    </a>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         ) : (
-          <div className="portfolio-grid-view">
+          <div className="portfolio-grid-layout">
             {filtered.map((item, index) => (
-              <div
-                key={item.id}
-                className="portfolio-item-card"
-                onClick={() => onOpenLightbox(item, filtered, index)}
+              <div 
+                key={item.id} 
+                className={`portfolio-item-card ${item.highlight ? 'portfolio-item-card--highlight' : ''}`}
               >
-                <div className="portfolio-item-card__img-box">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="portfolio-item-card__img"
+                <div 
+                  className="portfolio-image-wrapper"
+                  onClick={() => onOpenLightbox(item, filtered, index)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Увеличить: ${item.title}`}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onOpenLightbox(item, filtered, index);
+                    }
+                  }}
+                >
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="portfolio-image"
                     loading="lazy"
                   />
-                  <div className="portfolio-item-card__overlay">
-                    <div className="zoom-icon-box">
-                      <ZoomIn size={24} />
+                  
+                  <div className="portfolio-image-overlay">
+                    <div className="zoom-indicator font-heading">
+                      <ZoomIn size={18} />
+                      <span>УВЕЛИЧИТЬ</span>
                     </div>
-                    <span className="overlay-text font-heading">УВЕЛИЧИТЬ</span>
                   </div>
+
+                  <span className="portfolio-category-badge font-heading">
+                    {item.categoryLabel}
+                  </span>
+
+                  {item.highlight && (
+                    <span className="portfolio-highlight-badge font-heading">
+                      <Flame size={12} />
+                      <span>ТОП РАБОТА</span>
+                    </span>
+                  )}
                 </div>
 
-                <div className="portfolio-item-card__meta">
-                  <span className="meta-tag">{item.categoryLabel}</span>
-                  <h3 className="meta-title font-heading">{item.title}</h3>
-                  <div className="meta-sub">
-                    <span>{item.placement}</span>
-                    <span>•</span>
-                    <span>{item.style}</span>
+                <div className="portfolio-card-body">
+                  <h3 className="portfolio-item-title font-heading">{item.title}</h3>
+                  <p className="portfolio-item-style">{item.style}</p>
+                  {item.desc && <p className="portfolio-item-desc">{item.desc}</p>}
+                  
+                  <div className="portfolio-item-meta">
+                    <span className="meta-tag">{item.placement}</span>
+                    <span className="meta-tag meta-tag-time">{item.time}</span>
                   </div>
 
-                  <a
+                  <a 
                     href={getWhatsAppWorkUrl(item.title)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="work-wa-btn"
-                    onClick={(e) => e.stopPropagation()}
+                    className="portfolio-item-cta font-heading"
                   >
                     <MessageSquare size={14} />
-                    <span>Хочу такую в WhatsApp</span>
+                    <span>ХОЧУ В ЭТОМ СТИЛЕ</span>
                   </a>
                 </div>
               </div>
@@ -352,32 +286,12 @@ export default function Portfolio({ onOpenLightbox }) {
           </div>
         )}
 
-        {/* Yandex Maps Callout Footer */}
-        <div className="portfolio-footer-cta">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <div className="yandex-star-box font-heading">
-              <Star size={18} fill="#e50919" color="#e50919" />
-              <span>5.0</span>
-            </div>
-            <div>
-              <strong style={{ color: '#ffffff', display: 'block', fontSize: '1rem' }}>
-                Все свежие работы и отзывы на Яндекс Картах
-              </strong>
-              <span style={{ color: '#888888', fontSize: '0.84rem' }}>
-                Тату-салон «Чёрная Борода» • Проспект Мира, 53
-              </span>
-            </div>
-          </div>
-
-          <a
-            href={yandexMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary font-heading"
-          >
-            <span>ОТКРЫТЬ НА ЯНДЕКС КАРТАХ</span>
-            <ExternalLink size={16} />
-          </a>
+        {/* Footer info note */}
+        <div className="portfolio-bottom-note">
+          <p>
+            🔥 Понравилась работа или хотите авторский проект по своей идее? 
+            Напишите мастеру Арсену — консультация и примерка эскиза <strong>бесплатны</strong>!
+          </p>
         </div>
       </div>
     </section>

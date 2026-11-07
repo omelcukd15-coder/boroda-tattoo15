@@ -160,7 +160,7 @@ export default function Master({ onOpenBooking }) {
                 <span>НАПИСАТЬ АРСЕНУ В WHATSAPP</span>
                 <ArrowRight size={18} />
               </a>
-              <a href="https://yandex.ru/maps/-/CXfkURkr" target="_blank" rel="noopener noreferrer" className="btn-secondary master-btn-sec font-heading">
+              <a href="https://yandex.ru/maps/-/CXvgeXYJ" target="_blank" rel="noopener noreferrer" className="btn-secondary master-btn-sec font-heading">
                 <span>ОТЗЫВЫ НА КАРТАХ (5.0 ★)</span>
               </a>
             </div>

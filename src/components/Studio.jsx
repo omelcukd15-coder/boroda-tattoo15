@@ -68,7 +68,7 @@ export default function Studio({ onOpenBooking }) {
               </a>
 
               <a 
-                href="https://yandex.ru/maps/-/CXfkURkr" 
+                href="https://yandex.ru/maps/-/CXvgeXYJ" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary font-heading"
