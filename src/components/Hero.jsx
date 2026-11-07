@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, ArrowRight, Flame, Sparkles, TrendingDown, Gift, ShieldCheck } from 'lucide-react';
+import { MapPin, ArrowRight, Flame } from 'lucide-react';
 import { STUDIO_INFO, EXTERNAL_LINKS, WHATSAPP_INTENTS } from '../constants';
 
 export default function Hero({ onOpenBooking }) {
@@ -8,21 +8,6 @@ export default function Hero({ onOpenBooking }) {
       <div className="container hero-container">
         {/* Left Column: Headlines, Story, and Actions */}
         <div className="hero-content">
-          {/* Top Value Badges */}
-          <div className="hero-badge-chips">
-            <span className="hero-chip hero-chip--gold">
-              <TrendingDown size={14} />
-              <span>Цены на 20% ниже рынка</span>
-            </span>
-            <span className="hero-chip hero-chip--green">
-              <ShieldCheck size={14} />
-              <span>Плёнка и обезбол 0 ₽</span>
-            </span>
-            <a href="#models" className="hero-chip hero-chip--red" title="Узнать о программе тату-моделей">
-              <Sparkles size={14} />
-              <span>Ищем моделей (0 ₽)</span>
-            </a>
-          </div>
 
           <h1 className="hero-title">
             <span className="hero-title__primary font-accent">ТВОЯ ИСТОРИЯ</span>

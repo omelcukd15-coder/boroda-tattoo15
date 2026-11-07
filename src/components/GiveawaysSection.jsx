@@ -1,5 +1,5 @@
 import React from 'react';
-import { Gift, Trophy, Star, ArrowRight, MessageSquare } from 'lucide-react';
+import { Gift, Trophy, Star, ArrowRight, MessageSquare, Sparkles } from 'lucide-react';
 import { GIVEAWAYS_DATA } from '../data/promotionsData';
 import { EXTERNAL_LINKS, WHATSAPP_INTENTS } from '../constants';
 
@@ -19,39 +19,62 @@ export default function GiveawaysSection() {
   return (
     <section id="giveaways" className="giveaways-section">
       <div className="container">
+        {/* Section Head matching the site style */}
         <div className="section-head text-center">
-          <span className="section-pill">{GIVEAWAYS_DATA.badge}</span>
+          <span className="section-pill">
+            <Gift size={14} className="text-red" />
+            <span>РОЗЫГРЫШИ И ПОДАРКИ</span>
+          </span>
           <h2 className="section-title">
-            <span className="font-heading">{GIVEAWAYS_DATA.title.toUpperCase()}</span>
+            <span className="font-heading">РЕГУЛЯРНЫЕ </span>
+            <span className="font-accent text-red">РОЗЫГРЫШИ</span>
+            <span className="font-heading"> БЕСПЛАТНЫХ ТАТУ</span>
           </h2>
           <p className="section-desc centered-desc">
-            {GIVEAWAYS_DATA.subtitle}. Участвовать может любой житель Владикавказа и Республики Северная Осетия!
+            Каждый месяц студия «Чёрная Борода» проводит открытые розыгрыши среди подписчиков во Владикавказе и Северной Осетии.
           </p>
         </div>
 
-        {/* Prizes Cards */}
+        {/* 3 Prize Cards in site's dark aesthetic */}
         <div className="giveaway-prizes-grid">
           {GIVEAWAYS_DATA.prizes.map((prize, idx) => (
-            <div key={idx} className={`giveaway-prize-card ${idx === 0 ? 'giveaway-prize-card--grand' : ''}`}>
-              <div className="prize-place-badge font-heading">
-                {idx === 0 ? <Trophy size={16} className="text-gold" /> : <Star size={16} />}
-                <span>{prize.place}</span>
+            <div 
+              key={idx} 
+              className={`giveaway-prize-card ${idx === 0 ? 'giveaway-prize-card--grand' : ''}`}
+            >
+              <div className="giveaway-card-header">
+                <div className={`prize-place-badge font-heading ${idx === 0 ? 'prize-place-badge--grand' : ''}`}>
+                  {idx === 0 && <Trophy size={15} className="text-gold" />}
+                  {idx === 1 && <Star size={15} className="text-red" />}
+                  {idx === 2 && <Sparkles size={15} className="text-red" />}
+                  <span>{prize.place}</span>
+                </div>
+                {idx === 0 && <span className="prize-top-tag font-heading">ТОП ПРИЗ</span>}
               </div>
+
               <h3 className="prize-reward font-heading">{prize.reward}</h3>
               <p className="prize-desc">{prize.desc}</p>
-              <div className="prize-value-tag font-heading">{prize.value}</div>
+
+              <div className="prize-value-footer">
+                <span className="prize-val-label font-heading">ЦЕННОСТЬ:</span>
+                <span className={`prize-val-amount font-heading ${idx === 0 ? 'text-gold' : idx === 1 ? 'text-gold' : 'text-red'}`}>
+                  {prize.value}
+                </span>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Rules & Participation Box */}
+        {/* Participation instructions & action CTA */}
         <div className="giveaway-action-card">
           <div className="giveaway-steps">
-            <h4 className="font-heading giveaway-steps-title">КАК ПРИНЯТЬ УЧАСТИЕ:</h4>
+            <h4 className="font-heading giveaway-steps-title">
+              <span className="text-red font-heading">КАК ПРИНЯТЬ УЧАСТИЕ:</span>
+            </h4>
             <div className="giveaway-steps-list">
               {GIVEAWAYS_DATA.howToParticipate.map((step, i) => (
                 <div key={i} className="giveaway-step-item">
-                  <span className="step-num">{i + 1}</span>
+                  <span className="step-num font-heading">{i + 1}</span>
                   <span className="step-text">{step}</span>
                 </div>
               ))}
@@ -64,7 +87,7 @@ export default function GiveawaysSection() {
               className="btn-primary giveaway-btn font-heading"
               aria-label="Узнать о розыгрыше в WhatsApp"
             >
-              <MessageSquare size={18} />
+              <MessageSquare size={17} />
               <span>УЗНАТЬ В WHATSAPP</span>
             </button>
             <a
@@ -74,7 +97,7 @@ export default function GiveawaysSection() {
               className="btn-secondary giveaway-btn font-heading"
               aria-label="Открыть Instagram студии"
             >
-              <InstagramIcon size={18} />
+              <InstagramIcon size={17} />
               <span>INSTAGRAM СТУДИИ</span>
             </a>
           </div>
