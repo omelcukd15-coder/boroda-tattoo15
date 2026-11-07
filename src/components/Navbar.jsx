@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, ArrowRight, MessageSquare, MapPin, Sparkles, Gift } from 'lucide-react';
+import { Menu, X, Phone, MessageSquare, MapPin } from 'lucide-react';
 import { STUDIO_INFO, WHATSAPP_INTENTS } from '../constants';
 
-export default function Navbar({ onOpenBooking }) {
+export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -38,13 +38,11 @@ export default function Navbar({ onOpenBooking }) {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { name: 'Главная', href: '#hero' },
-    { name: 'Услуги и Цены', href: '#services' },
+    { name: 'Услуги', href: '#services' },
     { name: 'Портфолио', href: '#portfolio' },
-    { name: 'Тату-модели', href: '#models', badge: '0 ₽' },
+    { name: 'Тату-модели', href: '#models' },
     { name: 'Розыгрыши', href: '#giveaways' },
     { name: 'Отзывы', href: '#reviews' },
-    { name: 'Мастер', href: '#master' },
     { name: 'Контакты', href: '#contacts' },
   ];
 
@@ -71,17 +69,16 @@ export default function Navbar({ onOpenBooking }) {
           <a href="#hero" className="brand-logo" onClick={(e) => handleLinkClick(e, '#hero')}>
             <div className="logo-icon-wrapper">
               <img 
-                src="/assets/tattoo/real/logo_altay.jpg" 
-                alt="Чёрная Борода Тату Салон" 
+                src="/assets/tattoo/main-logo.png" 
+                alt="Чёрная Борода" 
                 className="logo-img" 
                 width="42" 
                 height="42" 
-                style={{ borderRadius: '50%', objectFit: 'cover' }}
               />
             </div>
             <div className="logo-text">
               <span className="logo-title font-heading">ЧЁРНАЯ БОРОДА</span>
-              <span className="logo-subtitle">ТАТУ - САЛОН • ВЛАДИКАВКАЗ</span>
+              <span className="logo-subtitle">ТАТУ - САЛОН</span>
             </div>
           </a>
 
@@ -91,43 +88,27 @@ export default function Navbar({ onOpenBooking }) {
               <a
                 key={link.name}
                 href={link.href}
-                className={`nav-link ${link.badge ? 'nav-link--badge' : ''}`}
+                className="nav-link"
                 onClick={(e) => handleLinkClick(e, link.href)}
               >
-                <span>{link.name}</span>
-                {link.badge && <span className="nav-link-pill font-heading">{link.badge}</span>}
+                {link.name}
               </a>
             ))}
           </nav>
 
-          {/* Action CTAs */}
+          {/* Header Right Actions */}
           <div className="header-actions">
-            <a 
-              href={`tel:${STUDIO_INFO.phoneRaw}`} 
-              className="header-phone font-heading" 
-              title="Позвонить в салон"
-            >
-              <Phone size={15} className="text-gold" />
-              <span>{STUDIO_INFO.phone}</span>
+            <a href={`tel:${STUDIO_INFO.phoneRaw}`} className="phone-btn" title="Позвонить в салон">
+              <Phone size={15} />
+              <span className="phone-text">{STUDIO_INFO.phone}</span>
             </a>
 
-            <a
-              href={WHATSAPP_INTENTS.general}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary header-booking-btn font-heading"
-              aria-label="Записаться через WhatsApp"
-            >
-              <MessageSquare size={16} />
-              <span>ЗАПИСАТЬСЯ</span>
-            </a>
-
-            {/* Mobile Hamburger Button */}
+            {/* Mobile burger button */}
             <button
-              className="mobile-menu-toggle"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={`mobile-toggle ${mobileMenuOpen ? 'mobile-toggle--active' : ''}`}
               aria-label={mobileMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
               aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -135,70 +116,81 @@ export default function Navbar({ onOpenBooking }) {
         </div>
       </header>
 
-      {/* Mobile Drawer Navigation */}
-      {mobileMenuOpen && (
-        <div className="mobile-nav-backdrop" onClick={() => setMobileMenuOpen(false)}>
-          <div className="mobile-nav-drawer" onClick={(e) => e.stopPropagation()}>
-            <div className="mobile-nav-header">
-              <div className="brand-logo">
-                <img 
-                  src="/assets/tattoo/real/logo_altay.jpg" 
-                  alt="Чёрная Борода" 
-                  className="logo-img" 
-                  width="36" 
-                  height="36" 
-                  style={{ borderRadius: '50%', objectFit: 'cover' }}
-                />
-                <div className="logo-text">
-                  <span className="logo-title font-heading">ЧЁРНАЯ БОРОДА</span>
-                  <span className="logo-subtitle">ВЛАДИКАВКАЗ</span>
-                </div>
-              </div>
-              <button 
-                className="modal-close-btn" 
-                onClick={() => setMobileMenuOpen(false)}
-                aria-label="Закрыть меню"
-              >
-                <X size={20} />
-              </button>
-            </div>
+      {/* Mobile Drawer Overlay */}
+      <div 
+        className={`mobile-backdrop ${mobileMenuOpen ? 'mobile-backdrop--active' : ''}`}
+        onClick={() => setMobileMenuOpen(false)}
+        aria-hidden="true"
+      />
 
-            <nav className="mobile-nav-links">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="mobile-nav-link font-heading"
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                >
-                  <span>{link.name}</span>
-                  {link.badge && <span className="nav-link-pill font-heading">{link.badge}</span>}
-                </a>
-              ))}
-            </nav>
+      {/* Fullscreen Mobile Drawer */}
+      <div 
+        className={`mobile-drawer ${mobileMenuOpen ? 'mobile-drawer--open' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Мобильное меню"
+      >
+        <div className="mobile-drawer__top">
+          <span className="mobile-drawer__tag font-heading">НАВИГАЦИЯ</span>
+          <button 
+            className="mobile-drawer__close" 
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Закрыть меню"
+          >
+            <X size={22} />
+          </button>
+        </div>
 
-            <div className="mobile-nav-footer">
-              <div className="mobile-schedule-card">
-                <MapPin size={16} className="text-red" />
-                <div>
-                  <strong>{STUDIO_INFO.address}</strong>
-                  <p>{STUDIO_INFO.schedule}</p>
-                </div>
-              </div>
+        <nav className="mobile-drawer__nav">
+          {navLinks.map((link, idx) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="mobile-drawer__link font-heading"
+              style={{ transitionDelay: `${idx * 0.04}s` }}
+              onClick={(e) => handleLinkClick(e, link.href)}
+            >
+              <span className="nav-number">0{idx + 1}</span>
+              <span className="nav-text">{link.name}</span>
+            </a>
+          ))}
+        </nav>
 
-              <a
-                href={WHATSAPP_INTENTS.general}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary mobile-nav-btn font-heading"
-              >
-                <MessageSquare size={18} />
-                <span>НАПИСАТЬ В WHATSAPP</span>
-              </a>
+        <div className="mobile-drawer__footer">
+          <div className="mobile-drawer__contacts">
+            <a href={`tel:${STUDIO_INFO.phoneRaw}`} className="mobile-drawer__phone">
+              <Phone size={18} className="text-red" />
+              <span>{STUDIO_INFO.phone}</span>
+            </a>
+            <div className="mobile-drawer__address">
+              <MapPin size={16} className="text-red" />
+              <span>{STUDIO_INFO.address}</span>
             </div>
           </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '16px' }}>
+            <a
+              href={WHATSAPP_INTENTS.general}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+              style={{ width: '100%', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+            >
+              <MessageSquare size={16} />
+              <span>Записаться в WhatsApp</span>
+            </a>
+
+            <a
+              href={`tel:${STUDIO_INFO.phoneRaw}`}
+              className="btn-secondary"
+              style={{ width: '100%', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+            >
+              <Phone size={15} />
+              <span>Позвонить Арсену</span>
+            </a>
+          </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

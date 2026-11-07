@@ -8,9 +8,7 @@ import {
   SlidersHorizontal,
   Flame,
   Star,
-  MessageSquare,
-  ShieldCheck,
-  Sparkles
+  MessageSquare
 } from 'lucide-react';
 import { PORTFOLIO_ITEMS, PORTFOLIO_CATEGORIES } from '../data/portfolioData';
 import { EXTERNAL_LINKS, createWhatsAppUrl } from '../constants';
@@ -42,15 +40,11 @@ export default function Portfolio({ onOpenLightbox }) {
         {/* Header */}
         <div className="portfolio-header">
           <div>
-            <div className="section-pill-row">
-              <span className="section-pill">РЕАЛЬНЫЕ РАБОТЫ ИЗ ЯНДЕКС КАРТ</span>
-              <span className="section-pill section-pill--gold">★ 5.0 РЕЙТИНГ</span>
-            </div>
             <h2 className="section-title">
-              <span className="font-heading">ПОРТФОЛИО СТУДИИ</span>
+              <span className="font-heading">РЕАЛЬНЫЕ РАБОТЫ (ЯНДЕКС КАРТЫ)</span>
             </h2>
             <p className="section-desc">
-              Все фотографии ниже — подлинные работы мастера Арсена из карточки салона на Яндекс Картах. Без ретуши и нейросетей.
+              Все фотографии ниже — подлинные работы мастера Арсена из карточки салона «Чёрная Борода». Без ретуши и нейросетей.
             </p>
           </div>
 
@@ -63,42 +57,62 @@ export default function Portfolio({ onOpenLightbox }) {
               title="Открыть профиль на Яндекс Картах"
             >
               <span className="yandex-dot" aria-hidden="true"></span>
-              <span className="yandex-btn-text">ЯНДЕКС КАРТЫ (ВСЕ ФОТО)</span>
+              <span className="yandex-btn-text">РАБОТЫ НА ЯНДЕКС КАРТАХ</span>
               <ExternalLink size={15} />
             </a>
 
             <div className="view-mode-toggle" aria-label="Режим отображения">
               <button
-                className={`view-mode-btn ${viewMode === 'carousel' ? 'active' : ''}`}
+                type="button"
+                className={`view-toggle-btn ${viewMode === 'carousel' ? 'view-toggle-btn--active' : ''}`}
                 onClick={() => setViewMode('carousel')}
                 title="Режим карусели"
                 aria-label="Режим карусели"
               >
-                <SlidersHorizontal size={16} />
-                <span className="view-mode-label">Слайдер</span>
+                <SlidersHorizontal size={17} />
               </button>
               <button
-                className={`view-mode-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                type="button"
+                className={`view-toggle-btn ${viewMode === 'grid' ? 'view-toggle-btn--active' : ''}`}
                 onClick={() => setViewMode('grid')}
                 title="Режим сетки"
                 aria-label="Режим сетки"
               >
-                <LayoutGrid size={16} />
-                <span className="view-mode-label">Сетка</span>
+                <LayoutGrid size={17} />
               </button>
             </div>
+
+            {viewMode === 'carousel' && (
+              <div className="portfolio-controls">
+                <button 
+                  type="button"
+                  className="carousel-btn" 
+                  onClick={() => scrollGallery('left')}
+                  aria-label="Предыдущие работы"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button 
+                  type="button"
+                  className="carousel-btn" 
+                  onClick={() => scrollGallery('right')}
+                  aria-label="Следующие работы"
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Categories / Filter Tabs */}
+        {/* Categories Tabs */}
         <div className="portfolio-filters-wrapper">
-          <div className="portfolio-filters" role="tablist" aria-label="Фильтр стилей">
-            {PORTFOLIO_CATEGORIES.map(cat => (
+          <div className="portfolio-filters">
+            {PORTFOLIO_CATEGORIES.map((cat) => (
               <button
                 key={cat.id}
-                role="tab"
-                aria-selected={filter === cat.id}
-                className={`portfolio-filter-tab font-heading ${filter === cat.id ? 'active' : ''}`}
+                type="button"
+                className={`filter-pill ${filter === cat.id ? 'filter-pill--active' : ''}`}
                 onClick={() => setFilter(cat.id)}
               >
                 {cat.label}
@@ -107,178 +121,95 @@ export default function Portfolio({ onOpenLightbox }) {
           </div>
         </div>
 
-        {/* Studio Perks Banner */}
-        <div className="portfolio-perks-banner">
-          <div className="perk-tag">
-            <Sparkles size={14} className="text-gold" />
-            <span>Цены на 20% ниже конкурентов</span>
-          </div>
-          <div className="perk-tag">
-            <ShieldCheck size={14} className="text-green" />
-            <span>Бесплатная заживляющая плёнка</span>
-          </div>
-          <div className="perk-tag">
-            <Star size={14} className="text-gold" />
-            <span>Обезболивающая мазь в подарок</span>
-          </div>
-        </div>
-
-        {/* Gallery Content */}
+        {/* Gallery View */}
         {viewMode === 'carousel' ? (
-          <div className="portfolio-carousel-wrapper">
-            {/* Nav Arrows */}
-            <button 
-              className="carousel-nav-arrow carousel-nav-prev"
-              onClick={() => scrollGallery('left')}
-              aria-label="Предыдущие работы"
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <button 
-              className="carousel-nav-arrow carousel-nav-next"
-              onClick={() => scrollGallery('right')}
-              aria-label="Следующие работы"
-            >
-              <ChevronRight size={24} />
-            </button>
-
-            {/* Scroll Container */}
-            <div 
-              ref={scrollContainerRef} 
-              className="portfolio-carousel-track scrollbar-hide"
-            >
-              {filtered.map((item, index) => (
-                <div 
-                  key={item.id} 
-                  className={`portfolio-item-card ${item.highlight ? 'portfolio-item-card--highlight' : ''}`}
-                >
-                  <div 
-                    className="portfolio-image-wrapper"
-                    onClick={() => onOpenLightbox(item, filtered, index)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Увеличить: ${item.title}`}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        onOpenLightbox(item, filtered, index);
-                      }
-                    }}
-                  >
-                    <img 
-                      src={item.image} 
-                      alt={item.title} 
-                      className="portfolio-image"
-                      loading="lazy"
-                    />
-                    
-                    <div className="portfolio-image-overlay">
-                      <div className="zoom-indicator font-heading">
-                        <ZoomIn size={18} />
-                        <span>УВЕЛИЧИТЬ</span>
-                      </div>
-                    </div>
-
-                    <span className="portfolio-category-badge font-heading">
-                      {item.categoryLabel}
-                    </span>
-
-                    {item.highlight && (
-                      <span className="portfolio-highlight-badge font-heading" title="Особая авторская работа">
-                        <Flame size={12} />
-                        <span>ТОП РАБОТА</span>
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="portfolio-card-body">
-                    <h3 className="portfolio-item-title font-heading">{item.title}</h3>
-                    <p className="portfolio-item-style">{item.style}</p>
-                    {item.desc && <p className="portfolio-item-desc">{item.desc}</p>}
-                    
-                    <div className="portfolio-item-meta">
-                      <span className="meta-tag">{item.placement}</span>
-                      <span className="meta-tag meta-tag-time">{item.time}</span>
-                    </div>
-
-                    <a 
-                      href={getWhatsAppWorkUrl(item.title)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="portfolio-item-cta font-heading"
-                    >
-                      <MessageSquare size={14} />
-                      <span>ХОЧУ В ЭТОМ СТИЛЕ</span>
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="portfolio-grid-layout">
+          <div className="portfolio-carousel" ref={scrollContainerRef}>
             {filtered.map((item, index) => (
-              <div 
-                key={item.id} 
-                className={`portfolio-item-card ${item.highlight ? 'portfolio-item-card--highlight' : ''}`}
+              <div
+                key={item.id}
+                className="portfolio-item-card"
+                onClick={() => onOpenLightbox(item, filtered, index)}
               >
-                <div 
-                  className="portfolio-image-wrapper"
-                  onClick={() => onOpenLightbox(item, filtered, index)}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Увеличить: ${item.title}`}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      onOpenLightbox(item, filtered, index);
-                    }
-                  }}
-                >
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="portfolio-image"
+                <div className="portfolio-item-card__img-box">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="portfolio-item-card__img"
                     loading="lazy"
                   />
-                  
-                  <div className="portfolio-image-overlay">
-                    <div className="zoom-indicator font-heading">
-                      <ZoomIn size={18} />
-                      <span>УВЕЛИЧИТЬ</span>
+                  <div className="portfolio-item-card__overlay">
+                    <div className="zoom-icon-box">
+                      <ZoomIn size={24} />
                     </div>
+                    <span className="overlay-text font-heading">УВЕЛИЧИТЬ</span>
                   </div>
-
-                  <span className="portfolio-category-badge font-heading">
-                    {item.categoryLabel}
-                  </span>
-
-                  {item.highlight && (
-                    <span className="portfolio-highlight-badge font-heading">
-                      <Flame size={12} />
-                      <span>ТОП РАБОТА</span>
-                    </span>
-                  )}
                 </div>
 
-                <div className="portfolio-card-body">
-                  <h3 className="portfolio-item-title font-heading">{item.title}</h3>
-                  <p className="portfolio-item-style">{item.style}</p>
-                  {item.desc && <p className="portfolio-item-desc">{item.desc}</p>}
-                  
-                  <div className="portfolio-item-meta">
-                    <span className="meta-tag">{item.placement}</span>
-                    <span className="meta-tag meta-tag-time">{item.time}</span>
+                <div className="portfolio-item-card__meta">
+                  <span className="meta-tag">{item.categoryLabel}</span>
+                  <h3 className="meta-title font-heading">{item.title}</h3>
+                  <div className="meta-sub">
+                    <span>{item.placement}</span>
+                    <span>•</span>
+                    <span>{item.style}</span>
                   </div>
 
-                  <a 
+                  <a
                     href={getWhatsAppWorkUrl(item.title)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="portfolio-item-cta font-heading"
+                    className="work-wa-btn"
+                    onClick={(e) => e.stopPropagation()}
+                    title="Записаться на похожую работу в WhatsApp"
                   >
                     <MessageSquare size={14} />
-                    <span>ХОЧУ В ЭТОМ СТИЛЕ</span>
+                    <span>Хочу такую в WhatsApp</span>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="portfolio-grid-view">
+            {filtered.map((item, index) => (
+              <div
+                key={item.id}
+                className="portfolio-item-card"
+                onClick={() => onOpenLightbox(item, filtered, index)}
+              >
+                <div className="portfolio-item-card__img-box">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="portfolio-item-card__img"
+                    loading="lazy"
+                  />
+                  <div className="portfolio-item-card__overlay">
+                    <div className="zoom-icon-box">
+                      <ZoomIn size={24} />
+                    </div>
+                    <span className="overlay-text font-heading">УВЕЛИЧИТЬ</span>
+                  </div>
+                </div>
+
+                <div className="portfolio-item-card__meta">
+                  <span className="meta-tag">{item.categoryLabel}</span>
+                  <h3 className="meta-title font-heading">{item.title}</h3>
+                  <div className="meta-sub">
+                    <span>{item.placement}</span>
+                    <span>•</span>
+                    <span>{item.style}</span>
+                  </div>
+
+                  <a
+                    href={getWhatsAppWorkUrl(item.title)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="work-wa-btn"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <MessageSquare size={14} />
+                    <span>Хочу такую в WhatsApp</span>
                   </a>
                 </div>
               </div>
@@ -286,12 +217,32 @@ export default function Portfolio({ onOpenLightbox }) {
           </div>
         )}
 
-        {/* Footer info note */}
-        <div className="portfolio-bottom-note">
-          <p>
-            🔥 Понравилась работа или хотите авторский проект по своей идее? 
-            Напишите мастеру Арсену — консультация и примерка эскиза <strong>бесплатны</strong>!
-          </p>
+        {/* Yandex Maps Callout Footer */}
+        <div className="portfolio-footer-cta">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div className="yandex-star-box font-heading">
+              <Star size={18} fill="#e50919" color="#e50919" />
+              <span>5.0</span>
+            </div>
+            <div>
+              <strong style={{ color: '#ffffff', display: 'block', fontSize: '1rem' }}>
+                Все 11+ свежих работ и отзывы на Яндекс Картах
+              </strong>
+              <span style={{ color: '#888888', fontSize: '0.84rem' }}>
+                Тату-салон «Чёрная Борода» • Проспект Мира, 53
+              </span>
+            </div>
+          </div>
+
+          <a
+            href={EXTERNAL_LINKS.yandexMaps}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary font-heading"
+          >
+            <span>ОТКРЫТЬ НА ЯНДЕКС КАРТАХ</span>
+            <ExternalLink size={16} />
+          </a>
         </div>
       </div>
     </section>

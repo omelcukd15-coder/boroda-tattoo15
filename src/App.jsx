@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import BenefitsBar from './components/BenefitsBar';
 import Services from './components/Services';
 import Portfolio from './components/Portfolio';
 import ModelProgram from './components/ModelProgram';
@@ -83,11 +82,6 @@ export default function App() {
       <main id="main-content">
         <Hero onOpenBooking={handleOpenWhatsApp} />
         
-        {/* Core Value Propositions Bar */}
-        <BenefitsBar 
-          onOpenModel={() => handleScrollTo('models')}
-          onOpenGiveaways={() => handleScrollTo('giveaways')}
-        />
 
         {/* Services & Prices */}
         <Services onSelectService={(service) => handleOpenWhatsApp(service)} />

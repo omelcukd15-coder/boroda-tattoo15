@@ -1,9 +1,85 @@
-import React from 'react';
-import { Clock, MessageSquare, Sparkles, Check, TrendingDown, ShieldCheck, Flame } from 'lucide-react';
-import { SERVICES_LIST, STUDIO_BENEFITS } from '../data/servicesData';
+import React, { useState } from 'react';
+import { Clock, MessageSquare, Sparkles, Check, ArrowRight, ShieldCheck, TrendingDown } from 'lucide-react';
 import { createWhatsAppUrl } from '../constants';
 
-export default function Services({ onSelectService }) {
+export default function Services() {
+  const [activeCategory, setActiveCategory] = useState('popular');
+
+  const popularServices = [
+    {
+      id: 'mini',
+      title: 'МИНИ ТАТУ',
+      price: 'от 1 200 ₽',
+      oldPrice: '1 500 ₽',
+      desc: 'Лаконичные символы, тонкие линии, аккуратная микро-геометрия. Бесплатная заживляющая плёнка в подарок.',
+      image: '/assets/tattoo/real/work_1.jpg',
+      time: '~ 1 час',
+      popular: true,
+      tag: '-20% ВЫГОДА',
+    },
+    {
+      id: 'lettering',
+      title: 'НАДПИСИ И КАЛЛИГРАФИЯ',
+      price: 'от 2 000 ₽',
+      oldPrice: '2 500 ₽',
+      desc: 'Памятные даты, фразы со смыслом и каллиграфия. Индивидуальный подбор шрифта. Обезболивание бесплатно.',
+      image: '/assets/tattoo/real/work_2.jpg',
+      time: '~ 1.5 часа',
+      popular: false,
+      tag: 'Каллиграфия',
+    },
+    {
+      id: 'drawings',
+      title: 'РИСУНКИ И ГРАФИКА',
+      price: 'от 3 000 ₽',
+      oldPrice: '3 800 ₽',
+      desc: 'Ч/б реализм, хищники, мифология, Dark Art. Ювелирная детализация, плотный цвет. Плёнка в подарок.',
+      image: '/assets/tattoo/real/work_7.jpg',
+      time: 'от 2.5 часов',
+      popular: true,
+      tag: 'Хит сезона',
+    },
+  ];
+
+  const allServices = [
+    ...popularServices,
+    {
+      id: 'custom',
+      title: 'АВТОРСКИЙ ПРОЕКТ',
+      price: 'от 5 000 ₽',
+      oldPrice: '6 500 ₽',
+      desc: 'Индивидуальная разработка концепта, перекрытие старых работ (cover-up), маскировка шрамов.',
+      image: '/assets/tattoo/real/work_11_review.jpg',
+      time: 'сеансы 3–5 часов',
+      popular: false,
+      tag: 'Dark Art / Реализм',
+    },
+    {
+      id: 'sleeves',
+      title: 'ПОЛНЫЙ РУКАВ',
+      price: 'от 15 000 ₽',
+      oldPrice: '19 000 ₽',
+      desc: 'Масштабная японская композиция или реализм на всю руку (самураи, Они, драконы). Плёнка на каждый сеанс.',
+      image: '/assets/tattoo/real/work_3.jpg',
+      time: 'от 2 сеансов',
+      popular: true,
+      tag: 'Масштаб',
+    },
+    {
+      id: 'correction',
+      title: 'БЕСПЛАТНАЯ КОРРЕКЦИЯ',
+      price: '0 ₽ (Бесплатно)',
+      oldPrice: '',
+      desc: 'Каждому клиенту гарантия салона: бесплатная коррекция после заживления при необходимости.',
+      image: '/assets/tattoo/real/work_8.jpg',
+      time: '~ 30–60 мин',
+      popular: false,
+      tag: 'Гарантия студии',
+    },
+  ];
+
+  const displayedServices = activeCategory === 'all' ? allServices : popularServices;
+
   const getWhatsAppUrl = (serviceTitle) => {
     return createWhatsAppUrl(`Здравствуйте, Арсен! Хочу записаться на консультацию по услуге «${serviceTitle}», я с сайта.`);
   };
@@ -13,130 +89,91 @@ export default function Services({ onSelectService }) {
       <div className="container">
         {/* Section Head */}
         <div className="section-head">
-          <div className="section-pill-row">
-            <span className="section-pill">ЧЕСТНЫЙ ПРАЙС БЕЗ САЛОННЫХ НАЦЕНОК</span>
-            <span className="section-pill section-pill--gold">ВЫГОДА ДО 20%</span>
+          <div>
+            <h2 className="section-title">
+              <span className="font-heading">УСЛУГИ И СТОИМОСТЬ</span>
+            </h2>
           </div>
-          <h2 className="section-title">
-            <span className="font-heading">УСЛУГИ И СТОИМОСТЬ</span>
-          </h2>
           <p className="section-desc">
-            Наши цены на 20% ниже конкурентов по Владикавказу. В стоимость каждого сеанса <strong>уже бесплатно включены</strong> заживляющая мембрана, обезболивающая мазь и консультация мастера.
+            Цены на 20% ниже конкурентов во Владикавказе. К каждому сеансу <strong>бесплатная заживляющая плёнка</strong> и обезболивающая мазь при необходимости.
           </p>
         </div>
 
-        {/* 4 Core Value Propositions */}
-        <div className="services-benefits-banner">
-          {STUDIO_BENEFITS.map((b) => (
-            <div key={b.id} className="service-benefit-badge">
-              <span className="benefit-badge-pill font-heading">{b.badge}</span>
-              <div className="benefit-badge-texts">
-                <strong>{b.title}</strong>
-                <span>{b.subtitle}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Services Cards with Real Photos */}
-        <div className="services-cards-grid">
-          {SERVICES_LIST.map((service) => (
-            <div 
-              key={service.id} 
-              className={`service-card ${service.popular ? 'service-card--featured' : ''}`}
+        {/* Filter Tabs */}
+        <div className="services-tabs-wrapper">
+          <div className="services-tabs">
+            <button
+              type="button"
+              className={`service-tab-btn ${activeCategory === 'popular' ? 'service-tab-btn--active' : ''}`}
+              onClick={() => setActiveCategory('popular')}
             >
-              {/* Photo of real work under this service */}
-              <div className="service-card-media">
-                <img 
-                  src={service.image} 
-                  alt={service.title} 
-                  className="service-card-img"
-                  loading="lazy" 
-                />
-                <div className="service-media-overlay"></div>
-                <div className="service-badge-stack">
-                  <span className="service-tag font-heading">{service.tag}</span>
-                  {service.discountBadge && (
-                    <span className="service-discount-tag font-heading">
-                      <TrendingDown size={12} />
-                      <span>{service.discountBadge}</span>
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="service-card-content">
-                <div className="service-header-row">
-                  <h3 className="service-title font-heading">{service.title}</h3>
-                  <div className="service-price-block">
-                    {service.oldPrice && (
-                      <span className="service-old-price">{service.oldPrice}</span>
-                    )}
-                    <span className="service-price font-heading">{service.price}</span>
-                  </div>
-                </div>
-
-                <p className="service-desc">{service.desc}</p>
-
-                {/* Free inclusions list */}
-                {service.includes && service.includes.length > 0 && (
-                  <div className="service-includes-box">
-                    <span className="includes-label font-heading">БЕСПЛАТНО В СЕАНСЕ:</span>
-                    <ul className="includes-list">
-                      {service.includes.map((inc, i) => (
-                        <li key={i}>
-                          <Check size={14} className="text-gold" />
-                          <span>{inc}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                <div className="service-meta-footer">
-                  <div className="service-time">
-                    <Clock size={15} />
-                    <span>{service.time}</span>
-                  </div>
-
-                  <a 
-                    href={getWhatsAppUrl(service.title)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="service-book-btn font-heading"
-                    aria-label={`Записаться на услугу ${service.title}`}
-                  >
-                    <MessageSquare size={16} />
-                    <span>ЗАПИСАТЬСЯ</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Free consultation banner */}
-        <div className="services-free-consult-card">
-          <div className="consult-card-glow" aria-hidden="true"></div>
-          <div className="consult-card-body">
-            <div>
-              <span className="badge-gold font-heading">0 ₽ КОНСУЛЬТАЦИЯ</span>
-              <h3 className="consult-card-title font-heading">НЕ УВЕРЕНЫ В СТОИМОСТИ ИЛИ РАЗМЕРЕ?</h3>
-              <p className="consult-card-desc">
-                Пришлите фото или идею в WhatsApp — мастер Арсен сделает бесплатный расчет стоимости с учетом -20% скидки и покажет, как татуировка будет смотреться на вашем теле.
-              </p>
-            </div>
-            <a
-              href={createWhatsAppUrl('Здравствуйте, Арсен! Хочу узнать точную стоимость татуировки по своей идее.')}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary consult-btn font-heading"
+              Популярные (3)
+            </button>
+            <button
+              type="button"
+              className={`service-tab-btn ${activeCategory === 'all' ? 'service-tab-btn--active' : ''}`}
+              onClick={() => setActiveCategory('all')}
             >
-              <MessageSquare size={18} />
-              <span>РАССЧИТАТЬ В WHATSAPP</span>
-            </a>
+              Все направления ({allServices.length})
+            </button>
           </div>
+        </div>
+
+        {/* Grid of clean styled cards */}
+        <div className="services-grid">
+          {displayedServices.map((service) => (
+            <article key={service.id} className="service-card">
+              <div className="service-card__image-box">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="service-card__img"
+                  loading="lazy"
+                />
+                {service.popular && (
+                  <span className="service-card__popular-badge">
+                    {service.tag}
+                  </span>
+                )}
+                <span className="service-card__badge">
+                  <Clock size={12} />
+                  <span>{service.time}</span>
+                </span>
+              </div>
+
+              <div className="service-card__body">
+                <div className="service-card__top">
+                  <h3 className="service-card__title font-heading">{service.title}</h3>
+                  <div style={{ textAlign: 'right' }}>
+                    {service.oldPrice && (
+                      <span style={{ fontSize: '0.74rem', color: '#666', textDecoration: 'line-through', display: 'block' }}>
+                        {service.oldPrice}
+                      </span>
+                    )}
+                    <span className="service-card__price font-heading" style={{ color: '#ffd966' }}>
+                      {service.price}
+                    </span>
+                  </div>
+                </div>
+
+                <p className="service-card__desc">{service.desc}</p>
+
+                <a
+                  href={getWhatsAppUrl(service.title)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="service-card__btn font-heading"
+                  title="Написать в WhatsApp Арсену"
+                >
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <MessageSquare size={16} />
+                    <span>КОНСУЛЬТАЦИЯ В WHATSAPP</span>
+                  </span>
+                  <ArrowRight size={16} />
+                </a>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
