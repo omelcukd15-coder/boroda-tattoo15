@@ -2,14 +2,127 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/assets/tattoo/main-logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Основные SEO мета-теги -->
     <title>Тату-салон «Чёрная Борода» | Владикавказ</title>
-    <meta name="description" content="Тату-салон «Чёрная Борода» во Владикавказе. Проспект Мира, 53. Мастер Арсен. Индивидуальные эскизы, стерильные инструменты, высокое качество и стиль." />
-    <!-- Fonts: Oswald (compact grotesque), Permanent Marker (bold marker), Ruslan Display (dark fantasy), Caveat (signature), Inter -->
+    <meta name="description" content="Премиум тату-студия «Чёрная Борода» во Владикавказе. Проспект Мира, 53. Мастер Арсен. Индивидуальные эскизы, стерильное оборудование, перекрытие старых работ и высочайшее качество." />
+    <meta name="keywords" content="тату владикавказ, тату салон владикавказ, черная борода тату, татуировки владикавказ, тату мастер арсен, тату проспект мира, тату студия осетия, сделать тату во владикавказе" />
+    <meta name="author" content="Тату-салон Чёрная Борода" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://boroda-tattoo15.ru/" />
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/png" href="/assets/tattoo/main-logo.png" />
+    <link rel="apple-touch-icon" href="/assets/tattoo/main-logo.png" />
+    <meta name="theme-color" content="#0a0a0c" />
+
+    <!-- Гео-привязка (Яндекс, Google Maps, 2GIS) -->
+    <meta name="geo.region" content="RU-SE" />
+    <meta name="geo.placename" content="Владикавказ" />
+    <meta name="geo.position" content="43.0244;44.6817" />
+    <meta name="ICBM" content="43.0244, 44.6817" />
+
+    <!-- OpenGraph (Telegram, VKontakte, WhatsApp, Facebook) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Тату-салон «Чёрная Борода»" />
+    <meta property="og:title" content="Тату-салон «Чёрная Борода» | Владикавказ" />
+    <meta property="og:description" content="Премиум татуировки во Владикавказе. Индивидуальные эскизы, стерильные инструменты и авторский стиль. Пр. Мира, 53." />
+    <meta property="og:url" content="https://boroda-tattoo15.ru/" />
+    <meta property="og:image" content="https://boroda-tattoo15.ru/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://boroda-tattoo15.ru/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Тату-салон Чёрная Борода Владикавказ" />
+    <meta property="og:locale" content="ru_RU" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Тату-салон «Чёрная Борода» | Владикавказ" />
+    <meta name="twitter:description" content="Премиум тату-студия во Владикавказе. Проспект Мира, 53. Мастер Арсен." />
+    <meta name="twitter:image" content="https://boroda-tattoo15.ru/og-image.jpg" />
+
+    <!-- VK Meta Tags -->
+    <meta property="vk:image" content="https://boroda-tattoo15.ru/og-image.jpg" />
+
+    <!-- Schema.org JSON-LD микроразметка для поисковиков (LocalBusiness / TattooParlor) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TattooParlor",
+      "name": "Тату-салон «Чёрная Борода»",
+      "image": "https://boroda-tattoo15.ru/og-image.jpg",
+      "logo": "https://boroda-tattoo15.ru/assets/tattoo/main-logo.png",
+      "url": "https://boroda-tattoo15.ru/",
+      "telephone": "+7 (999) 000-00-00",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "проспект Мира, 53",
+        "addressLocality": "Владикавказ",
+        "addressRegion": "Республика Северная Осетия — Алания",
+        "addressCountry": "RU"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 43.0244,
+        "longitude": 44.6817
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "11:00",
+          "closes": "21:00"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@500;600;700&family=Permanent+Marker&family=Ruslan+Display&subset=cyrillic,cyrillic-ext,latin&display=swap" rel="stylesheet">
+
+    <!-- Яндекс.Метрика (Yandex Metrika) -->
+    <script type="text/javascript">
+      // ЗАМЕНИТЕ НА ВАШ НОМЕР СЧЕТЧИКА ЯНДЕКС.МЕТРИКИ (например "98765432")
+      window.YM_ID = ""; 
+
+      if (window.YM_ID) {
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(window.YM_ID, "init", {
+          clickmap:true,
+          trackLinks:true,
+          accurateTrackBounce:true,
+          webvisor:true
+        });
+      }
+    </script>
+
+    <!-- Google Analytics 4 (gtag.js) -->
+    <script type="text/javascript">
+      // ЗАМЕНИТЕ НА ВАШ ID GOOGLE АНАЛИТИКИ (например "G-XXXXXXXXXX")
+      window.GA_MEASUREMENT_ID = "";
+
+      if (window.GA_MEASUREMENT_ID) {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA_MEASUREMENT_ID;
+        document.head.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', window.GA_MEASUREMENT_ID);
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
